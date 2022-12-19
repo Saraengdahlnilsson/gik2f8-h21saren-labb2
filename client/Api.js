@@ -79,10 +79,25 @@ class Api {
 
     Egentligen skulle jag ha kunnat satt exakt samma kedja av then-anrop här som vid create (POST) och getAll (READ), men det är inte helt relevant vad som kommer till baka från ett delete-anrop. 
     */
+
+
     return fetch(`${this.url}/${id}`, {
       method: 'DELETE'
     })
       .then((result) => result)
       .catch((err) => console.log(err));
+  }
+
+  update(id) {
+    const JSONData = JSON.stringify(data);
+    console.log(`Sending ${JSONData} to ${this.url}`);
+
+    const request = new Request(this.url, {
+      method: 'PATCH',
+      body: JSONData,
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
   }
 }
