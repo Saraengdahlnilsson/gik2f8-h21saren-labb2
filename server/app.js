@@ -113,6 +113,34 @@ app.delete('/tasks/:id', async (req, res) => {
   }
 });
 
+app.patch('/tasks/:id', async (req, res) => {
+  console.log(req);
+  try {
+    const newData = req.body;
+    const id = req.params.id;
+    const listBuffer = await fs.readFile('./tasks.json');
+    const currentTasks = JSON.parse(listBuffer);
+    if (currentTasks.length > 0) {
+      let foundTask = currentTasks.filter(task => task.id === id);
+      //om vi hittar
+      if(foundTask.length == 1){
+        //skriv över data
+        Object.assign(foundTasc[0], newData);
+        //all data utom med angett id
+        const newTaskList = currentTasks.filter(task => task.id != id);
+        //skicka till fil
+        await fs.writeFile('./tasks.json', JSON.stringify([...newTaskList, foundTask[0]]));
+        res.send(foundTask); 
+      }
+    } else {
+      
+      res.status(404).send({ messege: 'Det fanns ingen uppgift med detta id: ' + id});
+    }
+  } catch (error) {
+    res.status(500).send({ error: error.stack });
+  }
+});
+
 /***********************Labb 2 ***********************/
 /* Här skulle det vara lämpligt att skriva en funktion som likt post eller delete tar kan hantera PUT- eller PATCH-anrop (du får välja vilket, läs på om vad som verkar mest vettigt för det du ska göra) för att kunna markera uppgifter som färdiga. Den nya statusen - completed true eller falase - kan skickas i förfrågans body (req.body) tillsammans med exempelvis id så att man kan söka fram en given uppgift ur listan, uppdatera uppgiftens status och till sist spara ner listan med den uppdaterade uppgiften */
 

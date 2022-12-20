@@ -88,7 +88,7 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  update(id) {
+  update(id, data) {
     const JSONData = JSON.stringify(data);
     console.log(`Sending ${JSONData} to ${this.url}`);
 
@@ -99,5 +99,15 @@ class Api {
         'content-type': 'application/json'
       }
     });
+
+    return fetch( 
+      request 
+    )
+      .then((result) => result)
+      .catch((err) => console.log(err));
   }
-}
+
+  }
+
+
+
