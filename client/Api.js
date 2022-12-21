@@ -92,7 +92,7 @@ class Api {
     const JSONData = JSON.stringify(data);
     console.log(`Sending ${JSONData} to ${this.url}`);
 
-    const request = new Request(this.url, {
+    const request = new Request(`${this.url}/${id}`, {
       method: 'PATCH',
       body: JSONData,
       headers: {

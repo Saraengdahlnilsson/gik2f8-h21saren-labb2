@@ -1,5 +1,6 @@
 
 
+
 todoForm.title.addEventListener('keyup', (e) => validateField(e.target));
 todoForm.title.addEventListener('blur', (e) => validateField(e.target));
 todoForm.description.addEventListener('input', (e) => validateField(e.target));
@@ -87,18 +88,27 @@ function renderList() {
   api.getAll().then((tasks) => {
     todoListElement.innerHTML = '';
     if (tasks && tasks.length > 0) {
+      let one = tasks.filter((task) => task.completed == true);
+      let two = tasks.filter((task) => task.completed == false);
+      
+      // console.log(one);
       tasks.forEach((task) => {
         todoListElement.insertAdjacentHTML('beforeend', renderTask(task));
+  
       });
     }
   });
 }
 
-function renderTask({ id, title, description, dueDate }) {
+function renderTask({ id, title, description, dueDate, completed }) {
   let html = `
     <li class="select-none mt-2 py-2 border-b border-amber-300">
       <div class="flex items-center">
-      <input id="default-checkbox" type="checkbox" onclick="check(event, ${id})" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+      <input id="default-checkbox" type="checkbox" onclick="check(event, ${id})" value="" 
+      class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 
+      dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" `;
+      completed && (html += `checked`);
+      html +=`>
         <h3 class="mb-3 flex-1 text-xl font-bold text-pink-800 uppercase">${title}</h3>
         <div>
           <span>${dueDate}</span>
@@ -116,8 +126,9 @@ function renderTask({ id, title, description, dueDate }) {
 }
 
 function check(e, id) {
+    const comp = e.target.checked
     const data = {
-      completed: e.target.checked
+      completed: comp
     };
   api.update(id, data).then(data => renderList());
 }
