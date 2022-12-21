@@ -1,13 +1,9 @@
-/* Importrerar nodemodulen express (installerad med npm), som är ett utbrett verktyg för att skapa och arbeta med webbservrar och hantera HTTP-förfrågningar i ett nodejs-backend. */
 const express = require('express');
-/* Skapar upp ett express-objekt, som i stort representerar en webbserver */
 const app = express();
 
-/* Importerar den inbyggda modulen fs */
 const fs = require('fs/promises');
 
 const PORT = 5000;
-/* Expressobjektet, kallat app, har metoden "use" som används för att sätta inställningar hos vår server */
 app
   /* Man kan ange format etc. på de data som servern ska kunna ta emot och skicka. Metoderna json och urlencoded är inbyggda hos express */
   .use(express.json())

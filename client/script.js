@@ -1,6 +1,4 @@
 
-
-
 todoForm.title.addEventListener('keyup', (e) => validateField(e.target));
 todoForm.title.addEventListener('blur', (e) => validateField(e.target));
 todoForm.description.addEventListener('input', (e) => validateField(e.target));
@@ -91,10 +89,14 @@ function renderList() {
       let one = tasks.filter((task) => task.completed == true);
       let two = tasks.filter((task) => task.completed == false);
       
-      // console.log(one);
-      tasks.forEach((task) => {
+      one.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+      two.sort((a, b) => new Date(a.dueDate) - new Date( b.dueDate));
+
+      let sortList = [...two,...one]
+
+      sortList.forEach((task) => {
         todoListElement.insertAdjacentHTML('beforeend', renderTask(task));
-  
+        
       });
     }
   });
@@ -133,11 +135,9 @@ function check(e, id) {
   api.update(id, data).then(data => renderList());
 }
 
-
 function deleteTask(id) {
   api.remove(id).then((result) => {
     renderList();
   });
 }
-
 renderList();
