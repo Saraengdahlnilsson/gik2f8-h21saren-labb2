@@ -104,17 +104,17 @@ function renderList() {
 
 function renderTask({ id, title, description, dueDate, completed }) {
   let html = `
-    <li class="select-none mt-2 py-2 border-b border-amber-300">
+    <li class="select-none mt-2 py-2 border-b border-black">
       <div class="flex items-center">
       <input id="default-checkbox" type="checkbox" onclick="check(event, ${id})" value="" 
-      class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 
-      dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" `;
+      class="mr-4 w-4 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 
+      dark:focus:ring-blue-600 dark:ring-offset-pink-800 focus:ring-2 dark:bg-pink-700 dark:border-pink-600" `;
       completed && (html += `checked`);
       html +=`>
-        <h3 class="mb-3 flex-1 text-xl font-bold text-pink-800 uppercase">${title}</h3>
+        <h3 class="flex-1 text-xl font-bold text-pink-800 uppercase">${title}</h3>
         <div>
           <span>${dueDate}</span>
-          <button onclick="deleteTask(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2">Ta bort</button>
+          <button onclick="deleteTask(${id})" class="inline-block bg-yellow-500 text-xs text- border-1 border-black px-3 py-1 rounded-md ml-2">Ta bort</button>
         </div>
       </div>`;
   description &&
